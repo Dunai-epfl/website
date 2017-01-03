@@ -2,20 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-  <meta property="og:image" content="http://romsson.github.io/dragit/img/nations.png"/>
-  <meta name="twitter:card" content="photo">
-  <meta name="twitter:site" content="@romsson">
-  <meta name="twitter:creator" content="@romsson">
-  <meta name="twitter:title" content="A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot">
-  <meta name="twitter:image:src" content="http://romsson.github.io/dragit/img/nations.png"/>
-  <meta name="twitter:domain" content="http://romsson.github.io/dragit/">
-  <title>A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot</title>
-  <meta name="description" content="Drag & Drop World Countries (if you can)">
+  <title>Dinamic Visualization of Reddit's Growth by Country</title>
   <link href="../src/dragit.css" rel="stylesheet"/>
   <script src="../lib/d3.v3.js"></script>
   <script src="../src/dragit.js"></script>
 </head>
-<title>A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot</title>
+<title>Dinamic Visualization of Reddit's Growth by Country</title>
 <style>
 
 body {
@@ -99,9 +91,9 @@ path.lineTrajectory {
 
 </style>
 
-<h1>A Re-Recreation of Gapminder’s Wealth & Health of Nations</h1>
+<h1>Dinamic Visualization of Reddit's Growth by Country</h1>
 
-<i>Use your mouse to click and drag countries (represented as circles) to explore +200 years of life expectancy and income indicators.</i></p>
+<i>Use your mouse to click and drag countries (represented as circles) to explore.</i></p>
 
 <div id="chart" style="margin:0px"></div>
 <span id="min-time">1800</span> 
@@ -109,34 +101,16 @@ path.lineTrajectory {
 <span id="max-time">2008</span>
 <br>
 <p>
-Original creation by <a href="http://www.gapminder.org/world/">Gapminder</a> using <a href="https://github.com/RandomEtc/mind-gapper-js">Tom Carden</a> JavaScript version.<br>
-Recreation by <a href="http://bost.ocks.org/mike/nations/">Mike Bostock</a> with <a href="http://d3js.org/">D3.js</a>.<br>
+Original creation by <a href="http://www.gapminder.org/world/">Gapminder</a> using <a href="https://github.com/RandomEtc/mind-gapper-js">Tom Carden</a> JavaScript version.
+<br>
+Recreation by <a href="http://bost.ocks.org/mike/nations/">Mike Bostock</a> with <a href="http://d3js.org/">D3.js</a>.
+<br>
 Re-Recreation using <a href="http://romsson.github.io/dragit/">dragit.js</a> by <a href="http://romain.vuillemot.net/">Romain Vuillemot</a> (view <a href="https://github.com/romsson/dragit/blob/master/example/nations.html">source</a> on GitHub).
-
-<div class="twitter-share-container">
-  <a href="https://twitter.com/share" class="twitter-share-button" data-via="romsson" data-url="http://romsson.github.io/dragit/example/nations.html">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-</div></p>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
 
-<!-- Place this tag where you want the share button to render. -->
-<div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://romsson.github.io/dragit/example/nations.html"></div>
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=251461691555585&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
 <br>
-
-<!-- Social media buttons -->
-<div class="fb-share-button" data-href="http://romsson.github.io/dragit/example/nations.html" data-type="button_count"></div>
 
 <script>
 
