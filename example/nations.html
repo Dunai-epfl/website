@@ -91,14 +91,14 @@ path.lineTrajectory {
 
 </style>
 
-<h1>Dinamic Visualization of Reddit's Growth by Country (update)</h1>
+<h1>Dinamic Visualization of Reddit's Growth by Country</h1>
 
 <i>Use your mouse to click and drag countries (represented as circles) to explore, or the slide bar.</i></p>
 
 <div id="chart" style="margin:0px"></div>
-<span id="min-time">1800</span> 
+<span id="min-time">2008</span> 
 <input type="range" name="points" min="0" max="208" step="1" value="0" id="slider-time" style="width:900px">
-<span id="max-time">2008</span>
+<span id="max-time">2015</span>
 <br>
 
 <!-- Place this tag in your head or just before your close body tag. -->
@@ -172,7 +172,7 @@ var label = svg.append("text")
     .attr("text-anchor", "end")
     .attr("y", height - 24)
     .attr("x", width)
-    .text(1800);
+    .text(2008);
 
 // Add the country label; the value is set on transition.
 var countrylabel = svg.append("text")
@@ -266,9 +266,9 @@ d3.json("../data/nations.json", function(nations) {
       return {
         name: d.name,
         region: d.name,
-        income: interpolateValues(d.count, year),
+        count: interpolateValues(d.count, year),
         population: interpolateValues(d.population, year),
-        lifeExpectancy: interpolateValues(d.num_commments, year)
+        num_commments: interpolateValues(d.num_commments, year)
       };
     });
   }
