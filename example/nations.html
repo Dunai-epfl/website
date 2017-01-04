@@ -2,12 +2,20 @@
 <html>
 <head>
 <meta charset="utf-8">
-  <title>Dinamic Visualization of Reddit's Growth by Country</title>
+  <meta property="og:image" content="http://romsson.github.io/dragit/img/nations.png"/>
+  <meta name="twitter:card" content="photo">
+  <meta name="twitter:site" content="@romsson">
+  <meta name="twitter:creator" content="@romsson">
+  <meta name="twitter:title" content="A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot">
+  <meta name="twitter:image:src" content="http://romsson.github.io/dragit/img/nations.png"/>
+  <meta name="twitter:domain" content="http://romsson.github.io/dragit/">
+  <title>A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot</title>
+  <meta name="description" content="Drag & Drop World Countries (if you can)">
   <link href="../src/dragit.css" rel="stylesheet"/>
   <script src="../lib/d3.v3.js"></script>
   <script src="../src/dragit.js"></script>
 </head>
-<title>Dinamic Visualization of Reddit's Growth by Country</title>
+<title>A Re-Recreation of Gapminder’s Wealth & Health of Nations - Romain Vuillemot</title>
 <style>
 
 body {
@@ -91,26 +99,50 @@ path.lineTrajectory {
 
 </style>
 
-<h1>Dinamic Visualization of Reddit's Growth by Country</h1>
+<h1>A Re-Recreation of Gapminder’s Wealth & Health of Nations</h1>
 
-<i>Use your mouse to click and drag countries (represented as circles) to explore, or the slide bar.</i></p>
+<i>Use your mouse to click and drag countries (represented as circles) to explore +200 years of life expectancy and income indicators.</i></p>
 
 <div id="chart" style="margin:0px"></div>
-<span id="min-time">2008</span> 
-<input type="range" name="points" min="0" max="7" step="1" value="0" id="slider-time" style="width:900px">
-<span id="max-time">2015</span>
+<span id="min-time">1800</span> 
+<input type="range" name="points" min="0" max="208" step="1" value="0" id="slider-time" style="width:900px">
+<span id="max-time">2008</span>
 <br>
+<p>
+Original creation by <a href="http://www.gapminder.org/world/">Gapminder</a> using <a href="https://github.com/RandomEtc/mind-gapper-js">Tom Carden</a> JavaScript version.<br>
+Recreation by <a href="http://bost.ocks.org/mike/nations/">Mike Bostock</a> with <a href="http://d3js.org/">D3.js</a>.<br>
+Re-Recreation using <a href="http://romsson.github.io/dragit/">dragit.js</a> by <a href="http://romain.vuillemot.net/">Romain Vuillemot</a> (view <a href="https://github.com/romsson/dragit/blob/master/example/nations.html">source</a> on GitHub).
+
+<div class="twitter-share-container">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-via="romsson" data-url="http://romsson.github.io/dragit/example/nations.html">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div></p>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
 
+<!-- Place this tag where you want the share button to render. -->
+<div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://romsson.github.io/dragit/example/nations.html"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=251461691555585&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <br>
+
+<!-- Social media buttons -->
+<div class="fb-share-button" data-href="http://romsson.github.io/dragit/example/nations.html" data-type="button_count"></div>
 
 <script>
 
 // Various accessors that specify the four dimensions of data to visualize.
-function x(d) { return d.num_commments; }
-function y(d) { return d.count; }
+function x(d) { return d.income; }
+function y(d) { return d.lifeExpectancy; }
 function radius(d) { return d.population; }
 function color(d) { return d.region; }
 function key(d) { return d.name; }
@@ -121,13 +153,13 @@ var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
     height = 500 - margin.top - margin.bottom;
 
 // Various scales. These domains make assumptions of data, naturally.
-var xScale = d3.scale.linear().domain([1, 2500000]).range([0, width]),
-    yScale = d3.scale.linear().domain([1, 200000]).range([height, 0]),
-    radiusScale = d3.scale.sqrt().domain([0, 1e8]).range([0, 40]),
+var xScale = d3.scale.log().domain([300, 1e5]).range([0, width]),
+    yScale = d3.scale.linear().domain([10, 85]).range([height, 0]),
+    radiusScale = d3.scale.sqrt().domain([0, 5e8]).range([0, 40]),
     colorScale = d3.scale.category10();
 
 // The x & y axes.
-var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
+var xAxis = d3.svg.axis().orient("bottom").scale(xScale).ticks(12, d3.format(",d")),
     yAxis = d3.svg.axis().scale(yScale).orient("left");
 
 // Create the SVG container and set the origin.
@@ -155,7 +187,7 @@ svg.append("text")
     .attr("text-anchor", "end")
     .attr("x", width)
     .attr("y", height - 6)
-    .text("Number of Comments (posted in the year)");
+    .text("income per capita, inflation-adjusted (dollars)");
 
 // Add a y-axis label.
 svg.append("text")
@@ -164,7 +196,7 @@ svg.append("text")
     .attr("y", 6)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Number of Threads (opened in the year)");
+    .text("life expectancy (years)");
 
 // Add the year label; the value is set on transition.
 var label = svg.append("text")
@@ -172,7 +204,7 @@ var label = svg.append("text")
     .attr("text-anchor", "end")
     .attr("y", height - 24)
     .attr("x", width)
-    .text(2008);
+    .text(1800);
 
 // Add the country label; the value is set on transition.
 var countrylabel = svg.append("text")
@@ -194,7 +226,7 @@ d3.json("../data/nations.json", function(nations) {
   var dot = svg.append("g")
       .attr("class", "dots")
     .selectAll(".dot")
-      .data(interpolateData(2008))
+      .data(interpolateData(1800))
     .enter().append("circle")
       .attr("class", "dot")
       .style("fill", function(d) { return colorScale(color(d)); })
@@ -266,9 +298,9 @@ d3.json("../data/nations.json", function(nations) {
       return {
         name: d.name,
         region: d.region,
-        count: interpolateValues(d.count, year),
+        income: interpolateValues(d.income, year),
         population: interpolateValues(d.population, year),
-        num_commments: interpolateValues(d.num_commments, year)
+        lifeExpectancy: interpolateValues(d.lifeExpectancy, year)
       };
     });
   }
@@ -297,10 +329,10 @@ d3.json("../data/nations.json", function(nations) {
 
     dragit.init(".gRoot");
 
-    dragit.time = {min:2008, max:2016, step:1, current:2008}
+    dragit.time = {min:1800, max:2009, step:1, current:1800}
     dragit.data = d3.range(nations.length).map(function() { return Array(); })
 
-    for(var yy = 2008; yy<2016; yy++) {
+    for(var yy = 1800; yy<2009; yy++) {
 
       interpolateData(yy).filter(function(d, i) { 
         dragit.data[i][yy-dragit.time.min] = [xScale(x(d)), yScale(y(d))];
@@ -339,7 +371,7 @@ function clear_demo() {
 
 function play_demo() {
 
-  var ex_nations = ["CH", "ES", "FR", "IT", "DE","UK"]
+  var ex_nations = ["China", "India", "Indonesia", "Italy", "France", "Spain", "Germany", "United States"]
   var index_random_nation = null;
   var random_index = Math.floor(Math.random() * ex_nations.length);
   var random_nation = nations.filter(function(d, i) { 
