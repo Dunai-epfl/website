@@ -109,10 +109,10 @@ path.lineTrajectory {
 <script>
 
 // Various accessors that specify the four dimensions of data to visualize.
-function x(d) { return d.count; }
-function y(d) { return d.num_commments; }
+function x(d) { return d.num_commments; }
+function y(d) { return d.count; }
 function radius(d) { return d.population; }
-function color(d) { return d.name; }
+function color(d) { return d.region; }
 function key(d) { return d.name; }
 
 // Chart dimensions.
@@ -121,9 +121,9 @@ var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
     height = 500 - margin.top - margin.bottom;
 
 // Various scales. These domains make assumptions of data, naturally.
-var xScale = d3.scale.log().domain([300, 1e5]).range([0, width]),
-    yScale = d3.scale.linear().domain([10, 85]).range([height, 0]),
-    radiusScale = d3.scale.sqrt().domain([0, 5e8]).range([0, 40]),
+var xScale = d3.scale.linear().domain([0, 2500000]).range([0, width]),
+    yScale = d3.scale.linear().domain([0, 200000]).range([height, 0]),
+    radiusScale = d3.scale.sqrt().domain([0, 90000000]).range([0, 40]),
     colorScale = d3.scale.category10();
 
 // The x & y axes.
@@ -155,7 +155,7 @@ svg.append("text")
     .attr("text-anchor", "end")
     .attr("x", width)
     .attr("y", height - 6)
-    .text("income per capita, inflation-adjusted (dollars)");
+    .text("Number of Comments (posted in the year)");
 
 // Add a y-axis label.
 svg.append("text")
@@ -164,7 +164,7 @@ svg.append("text")
     .attr("y", 6)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("life expectancy (years)");
+    .text("Number of Threads (opened in the year)");
 
 // Add the year label; the value is set on transition.
 var label = svg.append("text")
@@ -265,7 +265,7 @@ d3.json("../data/nations.json", function(nations) {
     return nations.map(function(d) {
       return {
         name: d.name,
-        region: d.name,
+        region: d.region,
         count: interpolateValues(d.count, year),
         population: interpolateValues(d.population, year),
         num_commments: interpolateValues(d.num_commments, year)
