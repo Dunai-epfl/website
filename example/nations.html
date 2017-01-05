@@ -302,7 +302,7 @@ d3.json("../data/nations.json", function(error,json) {
 
     dragit.init(".gRoot");
 
-    dragit.time = {min:2008, max:2015, step:1, current:2008}
+    dragit.time = {min:2008, max:2016, step:1, current:2008}
     dragit.data = d3.range(nations.length).map(function() { return Array(); })
 
     for(var yy = 2008; yy<2015; yy++) {
@@ -344,7 +344,7 @@ function clear_demo() {
 
 function play_demo() {
 
-  var ex_nations = ["CH", "FR"]
+  var ex_nations = ["CH", "FR", "ES", "IT", "DE"]
   var index_random_nation = null;
   var random_index = Math.floor(Math.random() * ex_nations.length);
   var random_nation = nations.filter(function(d, i) { 
