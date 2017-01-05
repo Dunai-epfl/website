@@ -109,7 +109,7 @@ path.lineTrajectory {
 <script>
 
 // Various accessors that specify the four dimensions of data to visualize.
-function x(d) { return d.num_commments; }
+function x(d) { return d.num_comments; }
 function y(d) { return d.num_threads; }
 function radius(d) { return d.population; }
 function color(d) { return d.region; }
@@ -273,7 +273,7 @@ d3.json("../data/nations.json", function(error,json) {
         region: d.region,
         num_threads: interpolateValues(d.num_threads, year),
         population: interpolateValues(d.population, year),
-        num_commments: interpolateValues(d.num_commments, year)
+        num_comments: interpolateValues(d.num_comments, year)
       };
     });
   }
