@@ -116,13 +116,13 @@ function color(d) { return d.region; }
 function key(d) { return d.name; }
 
 // Chart dimensions.
-var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5},
+var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 50},
     width = 960 - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 // Various scales. These domains make assumptions of data, naturally.
-var xScale = d3.scale.linear().domain([1, 2500000]).range([0, width]),
-    yScale = d3.scale.linear().domain([1, 200000]).range([height, 0]),
+var xScale = d3.scale.linear().domain([0, 2500000]).range([0, width]),
+    yScale = d3.scale.linear().domain([0, 200000]).range([height, 0]),
     radiusScale = d3.scale.sqrt().domain([0, 1e8]).range([0, 40]),
     colorScale = d3.scale.category10();
 
@@ -266,9 +266,9 @@ d3.json("../data/nations.json", function(nations) {
       return {
         name: d.name,
         region: d.region,
-        count: interpolateValues(d.count, year),
+        count: interpolateValues(d.num_commments, year),
         population: interpolateValues(d.population, year),
-        num_commments: interpolateValues(d.num_commments, year)
+        num_commments: interpolateValues(d.count, year)
       };
     });
   }
@@ -339,7 +339,7 @@ function clear_demo() {
 
 function play_demo() {
 
-  var ex_nations = ["CH", "ES", "FR", "IT", "DE","UK"]
+  var ex_nations = ["CH", "FR"]
   var index_random_nation = null;
   var random_index = Math.floor(Math.random() * ex_nations.length);
   var random_nation = nations.filter(function(d, i) { 
@@ -355,7 +355,7 @@ function play_demo() {
   dragit.trajectory.display(random_nation, index_random_nation);
   countrylabel.text(random_nation.name);
 
-  dragit.utils.animateTrajectory(dragit.lineTrajectory, dragit.time.min, 2000)
+  dragit.utils.animateTrajectory(dragit.lineTrajectory, dragit.time.min, 2014)
 
   d3.selectAll(".dot").style("opacity", .4)
 
