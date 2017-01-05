@@ -338,6 +338,44 @@ function clear_demo() {
   }
 }
 
+function play_demo() {
+
+  var ex_nations = ["China", "India", "Indonesia", "Italy", "France", "Spain", "Germany", "United States"]
+  var index_random_nation = null;
+  var random_index = Math.floor(Math.random() * ex_nations.length);
+  var random_nation = nations.filter(function(d, i) { 
+    if(d.name == ex_nations[random_index]) {
+      index_random_nation = i;
+      return true;
+    }
+  })[0];
+
+  var random_nation = nations[index_random_nation];
+
+  dragit.trajectory.removeAll();
+  dragit.trajectory.display(random_nation, index_random_nation);
+  countrylabel.text(random_nation.name);
+
+  dragit.utils.animateTrajectory(dragit.lineTrajectory, dragit.time.min, 2000)
+
+  d3.selectAll(".dot").style("opacity", .4)
+
+  d3.selectAll(".dot").filter(function(d) {
+    return d.name == random_nation.name;
+  }).style("opacity", 1)
+}
+
+var demo_interval = null;
+
+setTimeout(function() {
+  if(first_time) {
+    play_demo()
+    demo_interval = setInterval(play_demo, 3000)
+  }
+}, 1000);
+
+});
+
 </script>
 </body>
 </html>
