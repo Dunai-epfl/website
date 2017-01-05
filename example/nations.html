@@ -184,9 +184,12 @@ var countrylabel = svg.append("text")
 
 var first_time = true;
 
+var nations = 0;
+
 // Load the data.
-d3.json("../data/nations.json", function(error,nations) {
+d3.json("../data/nations.json", function(error,json) {
   if (error) return console.warn(error);
+  nations = json;
 
 
   // A bisector since many nation's data is sparsely-defined.
