@@ -185,7 +185,9 @@ var countrylabel = svg.append("text")
 var first_time = true;
 
 // Load the data.
-d3.json("../data/nations.json", function(nations) {
+d3.json("../data/nations.json", function(error,nations) {
+  if (error) return console.warn(error);
+
 
   // A bisector since many nation's data is sparsely-defined.
   var bisect = d3.bisector(function(d) { return d[0]; });
@@ -297,10 +299,10 @@ d3.json("../data/nations.json", function(nations) {
 
     dragit.init(".gRoot");
 
-    dragit.time = {min:2008, max:2016, step:1, current:2008}
+    dragit.time = {min:2008, max:2015, step:1, current:2008}
     dragit.data = d3.range(nations.length).map(function() { return Array(); })
 
-    for(var yy = 2008; yy<2016; yy++) {
+    for(var yy = 2008; yy<2015; yy++) {
 
       interpolateData(yy).filter(function(d, i) { 
         dragit.data[i][yy-dragit.time.min] = [xScale(x(d)), yScale(y(d))];
